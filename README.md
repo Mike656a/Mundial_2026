@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Dashboard Mundial 2026: Clima, Sedes y Países
 
 Plataforma web tipo dashboard interactivo para consultar los partidos de la
