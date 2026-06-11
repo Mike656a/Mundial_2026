@@ -1,8 +1,3 @@
-// ============================================================
-// Tipos del sistema — Dashboard Mundial 2026
-// ============================================================
-
-/** Un partido de la fase de grupos (Anexo A del proyecto) */
 export interface Match {
   matchId: number;
   phase: 'group';
