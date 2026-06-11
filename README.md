@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Dashboard Mundial 2026: Clima, Sedes y Países
 
 Plataforma web tipo dashboard interactivo para consultar los partidos de la
@@ -21,8 +21,7 @@ Universitario de Chiquimulilla
 ## Instalación local
 
 ```bash
-git clone <URL-DEL-REPOSITORIO>
-cd mundial-2026-dashboard
+
 npm install
 npm run dev
 ```
