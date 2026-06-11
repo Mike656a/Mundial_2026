@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-pitch-950 text-slate-200 font-body antialiased;
+}
+
+/* Líneas verticales sutiles estilo FC26 en el fondo */
+.fc-grid-bg {
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 80px,
+    rgba(212, 160, 23, 0.03) 80px,
+    rgba(212, 160, 23, 0.03) 81px
+  );
+}
