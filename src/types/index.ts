@@ -51,3 +51,40 @@ export interface DayWeather {
   windMax: number;         // km/h
   weatherCode: number;     // código WMO
 }
+
+// ------------------------------------------------------------
+// REST Countries
+// ------------------------------------------------------------
+
+/** Respuesta cruda de REST Countries v3.1 (campos filtrados) */
+export interface RestCountryResponse {
+  name: {
+    common: string;
+    official: string;
+    nativeName?: Record<string, { official: string; common: string }>;
+  };
+  cca3: string;
+  flags: { svg: string; png: string; alt?: string };
+  capital?: string[];
+  region: string;
+  subregion?: string;
+  languages?: Record<string, string>;
+  currencies?: Record<string, { name: string; symbol?: string }>;
+  population: number;
+  timezones: string[];
+}
+
+/** Ficha de país procesada para la UI */
+export interface CountryInfo {
+  code: string;
+  commonName: string;
+  officialName: string;
+  flagSvg: string;
+  flagAlt: string;
+  capital: string;
+  region: string;
+  languages: string[];
+  currencies: string[];
+  population: number;
+  timezones: string[];
+}
