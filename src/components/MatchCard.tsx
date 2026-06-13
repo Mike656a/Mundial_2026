@@ -1,17 +1,19 @@
 // ============================================================
-// MatchCard.tsx — Tarjeta de partido del listado principal (US-08)
-// Columnas requeridas: Fecha · Hora local · Grupo · Sede ·
-// Equipo A vs Equipo B · Estado (dinámico, US-09)
+// US-08 / US-09 / US-11 — Tarjeta de partido del listado
+// Fecha · Hora local · Hora Guatemala · Grupo · Sede ·
+// Equipo A vs Equipo B (con banderas) · Estado dinámico
+// Banderas vía flagcdn (CDN estático): 0 llamadas a la API.
 // ============================================================
 
 import type { Match, MatchStatus } from '../types';
-import { getMatchStatus, STATUS_LABELS } from '../utils/time';
+import { getMatchStatus, getGuatemalaTime, STATUS_LABELS } from '../utils/time';
+import { getFlagUrl } from '../utils/flags';
 
 interface MatchCardProps {
   match: Match;
   /** Instante "ahora" compartido por todo el listado (se actualiza c/60 s) */
   now: Date;
-  /** Navegación al detalle (US-13) — opcional por ahora */
+  /** Navegación al detalle del partido (US-13) */
   onSelect?: (match: Match) => void;
 }
 
@@ -23,6 +25,7 @@ const STATUS_STYLES: Record<MatchStatus, string> = {
 
 export default function MatchCard({ match, now, onSelect }: MatchCardProps) {
   const status = getMatchStatus(match, now);
+  const gt = getGuatemalaTime(match);
 
   return (
     <button
@@ -31,8 +34,9 @@ export default function MatchCard({ match, now, onSelect }: MatchCardProps) {
       className="group w-full rounded-lg border border-slate-700/60 bg-pitch-800 p-4 text-left
                  transition-all duration-150 hover:border-gold-500/60 hover:bg-pitch-700
                  focus:outline-none focus:ring-2 focus:ring-gold-500/50"
-      aria-label={`${match.teamAName} contra ${match.teamBName}, grupo ${match.group}, ${match.date}`}
+      aria-label={`Ver detalle: ${match.teamAName} contra ${match.teamBName}, grupo ${match.group}`}
     >
+      {/* Fila superior: grupo + estado */}
       <div className="flex items-center justify-between">
         <span className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-gold-500">
           Grupo {match.group}
@@ -44,18 +48,24 @@ export default function MatchCard({ match, now, onSelect }: MatchCardProps) {
         </span>
       </div>
 
+      {/* Equipos con banderas */}
       <div className="mt-3 flex items-center justify-between gap-2">
-        <TeamName code={match.teamA} name={match.teamAName} align="left" />
+        <Team code={match.teamA} name={match.teamAName} align="left" />
         <span className="font-display text-sm font-bold text-slate-500 group-hover:text-gold-400">
           VS
         </span>
-        <TeamName code={match.teamB} name={match.teamBName} align="right" />
+        <Team code={match.teamB} name={match.teamBName} align="right" />
       </div>
 
+      {/* Fila inferior: fecha, horas, sede */}
       <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-slate-700/50 pt-3 text-xs text-slate-400">
         <span>{match.date}</span>
         <span className="text-gold-400/80">
-          {match.timeLocal} <span className="text-slate-500">hora local</span>
+          {match.timeLocal} <span className="text-slate-500">local</span>
+        </span>
+        <span className="text-emerald-300/80">
+          {gt.time}
+          {gt.dayShift} <span className="text-slate-500">GT</span>
         </span>
         <span className="truncate">
           {match.venueName} · {match.city}
@@ -65,7 +75,7 @@ export default function MatchCard({ match, now, onSelect }: MatchCardProps) {
   );
 }
 
-function TeamName({
+function Team({
   code,
   name,
   align,
@@ -74,18 +84,30 @@ function TeamName({
   name: string;
   align: 'left' | 'right';
 }) {
+  const flag = (
+    <img
+      src={getFlagUrl(code, 40)}
+      alt={`Bandera de ${name}`}
+      loading="lazy"
+      className="h-6 w-9 flex-shrink-0 rounded-sm object-cover ring-1 ring-slate-600/60"
+    />
+  );
+
   return (
     <div
-      className={`flex min-w-0 flex-1 flex-col ${
-        align === 'right' ? 'items-end text-right' : 'items-start'
+      className={`flex min-w-0 flex-1 items-center gap-2.5 ${
+        align === 'right' ? 'flex-row-reverse text-right' : ''
       }`}
     >
-      <span className="font-display text-base font-semibold uppercase leading-tight tracking-wide text-slate-100 sm:text-lg">
-        {name}
-      </span>
-      <span className="text-[11px] font-medium tracking-[0.25em] text-slate-500">
-        {code}
-      </span>
+      {flag}
+      <div className={`min-w-0 ${align === 'right' ? 'items-end' : ''}`}>
+        <p className="truncate font-display text-base font-semibold uppercase leading-tight tracking-wide text-slate-100 sm:text-lg">
+          {name}
+        </p>
+        <p className="text-[11px] font-medium tracking-[0.25em] text-slate-500">
+          {code}
+        </p>
+      </div>
     </div>
   );
 }
