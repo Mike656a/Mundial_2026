@@ -30,6 +30,7 @@ export function useWeather(match: Match | undefined) {
         match!.longitude,
         match!.date,
         match!.timezone,
+        match!.timeLocal, // para la humedad de la hora del partido
       ),
     enabled: Boolean(match),       // no dispara hasta tener un partido
     staleTime: 1000 * 60 * 30,     // 30 min: el pronóstico no cambia tanto

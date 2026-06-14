@@ -1,3 +1,8 @@
+// ============================================================
+// Tipos del sistema — Dashboard Mundial 2026
+// ============================================================
+
+/** Un partido de la fase de grupos (Anexo A del proyecto) */
 export interface Match {
   matchId: number;
   phase: 'group';
@@ -40,6 +45,10 @@ export interface OpenMeteoResponse {
     temperature_2m_max: string;
     windspeed_10m_max: string;
   };
+  hourly?: {
+    time: string[];
+    relative_humidity_2m: number[];
+  };
 }
 
 /** Clima del día del partido, ya procesado para la UI */
@@ -47,9 +56,16 @@ export interface DayWeather {
   date: string;
   tempMax: number;
   tempMin: number;
-  rainProbability: number; // %
-  windMax: number;         // km/h
-  weatherCode: number;     // código WMO
+  rainProbability: number;   // %
+  windMax: number;           // km/h
+  weatherCode: number;       // código WMO
+  humidity: number | null;   // % a la hora del partido (variable horaria)
+}
+
+/** US-15 — Recomendación contextual generada en el frontend */
+export interface WeatherRecommendation {
+  level: 'favorable' | 'calor' | 'lluvia' | 'adverso';
+  message: string;
 }
 
 // ------------------------------------------------------------
