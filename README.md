@@ -1,4 +1,3 @@
-
 # Dashboard Mundial 2026: Clima, Sedes y Países
 
 Plataforma web tipo dashboard interactivo para consultar los partidos de la
@@ -21,7 +20,8 @@ Universitario de Chiquimulilla
 ## Instalación local
 
 ```bash
-
+git clone <URL-DEL-REPOSITORIO>
+cd mundial-2026-dashboard
 npm install
 npm run dev
 ```
@@ -36,7 +36,8 @@ npm run build
 
 ## URL de producción
 
-> Pendiente — se desplegará en Render.com como Static Site (US-12).
+> Pendiente — seguir los pasos de [DEPLOY.md](./DEPLOY.md) (US-12).
+> El archivo `render.yaml` ya incluye la regla de rewrite SPA.
 
 ## Notas técnicas
 
@@ -48,3 +49,10 @@ npm run build
   REST Countries.
 - **CORS:** `vite.config.ts` incluye un proxy de desarrollo. En producción
   el servicio usa countriesnow.space como fallback automático.
+- **Banderas:** el listado usa flagcdn.com (CDN estático, 0 llamadas a API);
+  el detalle usa las banderas SVG de REST Countries (sección 4.4 del PDF).
+- **Comparador y búsqueda:** US-17 compara los dos países de un partido (con diferencia de población) y US-18 permite buscar una selección y ver todos sus partidos con resumen de clima.
+- **Manuales:** USER_GUIDE.md y docs/TECHNICAL.md documentan el sistema (US-21, US-22).
+- **Alineaciones:** no existe API gratuita de alineaciones del Mundial;
+  `src/data/squads.json` gestiona XIs probables de forma estática y
+  extensible, igual que `matches.json`.
