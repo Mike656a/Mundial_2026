@@ -40,7 +40,19 @@ function fromLocal(originalCode: string, isoCode: string): CountryInfo | null {
   };
 }
 
-const REST_URLS = ['https://restcountries.com/v3.1'];
+/**
+ * US-07 — Cascada de acceso a REST Countries:
+ *  1. En desarrollo, primero el proxy de Vite (/api/countries →
+ *     restcountries.com, definido en vite.config.ts) para evitar CORS.
+ *  2. Si el proxy falla (redes con SSL interceptado, server no
+ *     reiniciado, etc.), se intenta la URL directa: REST Countries
+ *     normalmente envía Access-Control-Allow-Origin: *.
+ *  3. Si ambas fallan, getCountryFromFallback() usa CountriesNow.
+ * Cada intento fallido se registra en la consola con su causa.
+ */
+const REST_URLS = import.meta.env.DEV
+  ? ['/api/countries', 'https://restcountries.com/v3.1']
+  : ['https://restcountries.com/v3.1'];
 
 /** Intenta la misma ruta en cada base de REST_URLS hasta que una responda */
 async function fetchRest(path: string): Promise<unknown> {
@@ -291,4 +303,42 @@ async function getCountryFromFallback(
         'Sin entrada en el dataset local.',
     );
   }
+}
+
+// ============================================================
+// Banderas en lote (para el dashboard y todos los componentes)
+// REST Countries acepta varios códigos en /alpha?codes=a,b,c y
+// devuelve un arreglo. Así obtenemos las 48 banderas SVG en UNA
+// sola llamada, en vez de 96 peticiones desde las tarjetas.
+// ============================================================
+
+/**
+ * Descarga las banderas SVG de varias selecciones a la vez desde
+ * REST Countries. Devuelve un mapa { códigoOriginal → urlSvg }.
+ *
+ * @param codes Códigos alfa-3 / FIFA, ej. ["MEX","ZAF","ENG"]
+ */
+export async function getFlagsByCodes(
+  codes: string[],
+): Promise<Record<string, string>> {
+  // Resolver códigos FIFA (ENG/SCO → GBR) y quitar duplicados
+  const isoToOriginals = new Map<string, string[]>();
+  for (const code of codes) {
+    const iso = FIFA_CODE_OVERRIDES[code] ?? code;
+    isoToOriginals.set(iso, [...(isoToOriginals.get(iso) ?? []), code]);
+  }
+  const isoCodes = Array.from(isoToOriginals.keys());
+
+  const json = (await fetchRest(
+    `/alpha?codes=${isoCodes.join(',')}&fields=cca3,flags`,
+  )) as Array<{ cca3: string; flags: { svg: string } }>;
+
+  const result: Record<string, string> = {};
+  for (const country of json) {
+    const originals = isoToOriginals.get(country.cca3) ?? [];
+    for (const original of originals) {
+      result[original] = country.flags.svg;
+    }
+  }
+  return result;
 }
