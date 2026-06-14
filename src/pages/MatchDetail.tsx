@@ -10,9 +10,10 @@ import type { ReactNode } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import matchesData from '../data/matches.json';
 import CountryCard from '../components/CountryCard';
+import CountryCompare from '../components/CountryCompare';
 import LineupPanel from '../components/LineupPanel';
 import WeatherPanel from '../components/WeatherPanel';
-import { getFlagUrl } from '../utils/flags';
+import Flag from '../components/Flag';
 import {
   getMatchStatus,
   getGuatemalaTime,
@@ -132,6 +133,16 @@ export default function MatchDetail() {
           </div>
         </section>
 
+        {/* ===== Comparador de países (US-17) ===== */}
+        <section>
+          <h2 className="font-display text-xl font-semibold uppercase tracking-wide text-slate-200">
+            <span className="text-gold-500">/</span> Comparador
+          </h2>
+          <div className="mt-4">
+            <CountryCompare match={match} />
+          </div>
+        </section>
+
         {/* ===== Alineaciones probables ===== */}
         <LineupPanel
           teamA={match.teamA}
@@ -159,9 +170,9 @@ function BigTeam({
         align === 'right' ? 'items-end text-right' : 'items-start'
       }`}
     >
-      <img
-        src={getFlagUrl(code, 160)}
-        alt={`Bandera de ${name}`}
+      <Flag
+        code={code}
+        name={name}
         className="h-12 w-20 rounded object-cover ring-1 ring-gold-500/40 sm:h-16 sm:w-28"
       />
       <span className="font-display text-2xl font-bold uppercase leading-none tracking-wide text-slate-100 sm:text-4xl">

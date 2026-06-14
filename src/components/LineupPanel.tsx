@@ -7,7 +7,7 @@
 // ============================================================
 
 import squadsData from '../data/squads.json';
-import { getFlagUrl } from '../utils/flags';
+import Flag from './Flag';
 
 interface Player {
   num: number;
@@ -68,9 +68,9 @@ function TeamLineup({ code, name }: { code: string; name: string }) {
   return (
     <div className="rounded-lg border border-slate-700/60 bg-pitch-800 p-5">
       <div className="flex items-center gap-3 border-b border-gold-500/30 pb-3">
-        <img
-          src={getFlagUrl(code, 40)}
-          alt={`Bandera de ${name}`}
+        <Flag
+          code={code}
+          name={name}
           className="h-5 w-8 rounded-sm object-cover ring-1 ring-slate-600/60"
         />
         <div className="min-w-0 flex-1">

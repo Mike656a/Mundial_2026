@@ -7,7 +7,7 @@
 
 import type { Match, MatchStatus } from '../types';
 import { getMatchStatus, getGuatemalaTime, STATUS_LABELS } from '../utils/time';
-import { getFlagUrl } from '../utils/flags';
+import Flag from './Flag';
 
 interface MatchCardProps {
   match: Match;
@@ -85,12 +85,7 @@ function Team({
   align: 'left' | 'right';
 }) {
   const flag = (
-    <img
-      src={getFlagUrl(code, 40)}
-      alt={`Bandera de ${name}`}
-      loading="lazy"
-      className="h-6 w-9 flex-shrink-0 rounded-sm object-cover ring-1 ring-slate-600/60"
-    />
+    <Flag code={code} name={name} />
   );
 
   return (

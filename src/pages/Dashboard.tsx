@@ -1,7 +1,15 @@
+// ============================================================
+// US-08 + US-10 — Dashboard: listado completo con filtros
+// Filtros activos: grupo (A–L) · sede · equipo · fecha
+// Los filtros se combinan entre sí (AND) y muestran el conteo
+// de resultados. Cada tarjeta navega al detalle (US-13).
+// ============================================================
+
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import matchesData from '../data/matches.json';
 import MatchCard from '../components/MatchCard';
+import TeamSearch from '../components/TeamSearch';
 import { formatDateEs } from '../utils/time';
 import type { Match } from '../types';
 
@@ -111,7 +119,7 @@ export default function Dashboard() {
               options={TEAMS.map(([code, name]): [string, string] => [code, name])}
             />
             <FilterSelect
-              label="Fecha"
+              label="Jornada"
               value={date}
               onChange={setDate}
               options={DATES.map((d): [string, string] => [d, formatDateEs(d)])}
@@ -141,6 +149,11 @@ export default function Dashboard() {
             de {matches.length} partidos
           </p>
         </section>
+
+        {/* ===== Búsqueda por equipo (US-18) ===== */}
+        <div className="mt-6">
+          <TeamSearch />
+        </div>
 
         {/* ===== Listado por jornada ===== */}
         {filtered.length === 0 && (
