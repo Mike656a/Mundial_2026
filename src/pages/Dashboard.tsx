@@ -1,14 +1,8 @@
-// ============================================================
-// US-08 + US-10 — Dashboard: listado completo con filtros
-// Filtros activos: grupo (A–L) · sede · equipo · fecha
-// Los filtros se combinan entre sí (AND) y muestran el conteo
-// de resultados. Cada tarjeta navega al detalle (US-13).
-// ============================================================
-
 import { useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import matchesData from '../data/matches.json';
 import MatchCard from '../components/MatchCard';
-import { formatDateEs, getKickoffUtc } from '../utils/time';
+import { formatDateEs } from '../utils/time';
 import type { Match } from '../types';
 
 const matches = matchesData as Match[];
@@ -26,6 +20,8 @@ const TEAMS = Array.from(
 ).sort((a, b) => a[1].localeCompare(b[1], 'es'));
 
 export default function Dashboard() {
+  const navigate = useNavigate();
+
   // "Ahora" compartido por todas las tarjetas; se refresca cada minuto
   const [now, setNow] = useState(() => new Date());
   useEffect(() => {
@@ -54,18 +50,13 @@ export default function Dashboard() {
   );
 
   // Agrupar resultados por fecha preservando orden cronológico
- const byDate = useMemo(() => {
-    const sorted = [...filtered].sort((a, b) =>
-      getKickoffUtc(a).getTime() - getKickoffUtc(b).getTime()
-    );
-
+  const byDate = useMemo(() => {
     const map = new Map<string, Match[]>();
-    for (const match of sorted) {
+    for (const match of filtered) {
       const list = map.get(match.date) ?? [];
       list.push(match);
       map.set(match.date, list);
     }
-
     return Array.from(map.entries());
   }, [filtered]);
 
@@ -178,7 +169,12 @@ export default function Dashboard() {
 
             <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {dayMatches.map((match) => (
-                <MatchCard key={match.matchId} match={match} now={now} />
+                <MatchCard
+                  key={match.matchId}
+                  match={match}
+                  now={now}
+                  onSelect={(m) => navigate(`/partido/${m.matchId}`)}
+                />
               ))}
             </div>
           </section>

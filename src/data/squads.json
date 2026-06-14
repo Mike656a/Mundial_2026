@@ -1,0 +1,39 @@
+{
+  "_nota": "Alineaciones PROBABLES según prensa deportiva (las oficiales se anuncian ~1 hora antes de cada partido y no existe API gratuita que las provea). Estructura extensible: agregar equipos con su código alfa-3 como llave.",
+  "MEX": {
+    "coach": "Javier Aguirre",
+    "formation": "4-3-3",
+    "status": "probable",
+    "players": [
+      { "num": 1, "name": "Raúl Rangel", "pos": "POR" },
+      { "num": 2, "name": "Jorge Sánchez", "pos": "DEF" },
+      { "num": 3, "name": "César Montes", "pos": "DEF" },
+      { "num": 5, "name": "Johan Vásquez", "pos": "DEF" },
+      { "num": 23, "name": "Jesús Gallardo", "pos": "DEF" },
+      { "num": 4, "name": "Edson Álvarez (C)", "pos": "MED" },
+      { "num": 6, "name": "Erik Lira", "pos": "MED" },
+      { "num": 16, "name": "Brian Gutiérrez", "pos": "MED" },
+      { "num": 7, "name": "Roberto Alvarado", "pos": "DEL" },
+      { "num": 9, "name": "Raúl Jiménez", "pos": "DEL" },
+      { "num": 10, "name": "Julián Quiñones", "pos": "DEL" }
+    ]
+  },
+  "ZAF": {
+    "coach": "Hugo Broos",
+    "formation": "4-2-3-1",
+    "status": "probable",
+    "players": [
+      { "num": 1, "name": "Ronwen Williams (C)", "pos": "POR" },
+      { "num": 2, "name": "Khuliso Mudau", "pos": "DEF" },
+      { "num": 4, "name": "Ime Okon", "pos": "DEF" },
+      { "num": 5, "name": "Mbekezeli Mbokazi", "pos": "DEF" },
+      { "num": 3, "name": "Aubrey Modiba", "pos": "DEF" },
+      { "num": 8, "name": "Teboho Mokoena", "pos": "MED" },
+      { "num": 6, "name": "Sphephelo Sithole", "pos": "MED" },
+      { "num": 7, "name": "Oswin Appollis", "pos": "MED" },
+      { "num": 10, "name": "Themba Zwane", "pos": "MED" },
+      { "num": 11, "name": "Tshepang Moremi", "pos": "MED" },
+      { "num": 9, "name": "Lyle Foster", "pos": "DEL" }
+    ]
+  }
+}
