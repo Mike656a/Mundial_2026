@@ -8,7 +8,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import matchesData from '../data/matches.json';
 import MatchCard from '../components/MatchCard';
-import { formatDateEs } from '../utils/time';
+import { formatDateEs, getKickoffUtc } from '../utils/time';
 import type { Match } from '../types';
 
 const matches = matchesData as Match[];
@@ -54,13 +54,18 @@ export default function Dashboard() {
   );
 
   // Agrupar resultados por fecha preservando orden cronológico
-  const byDate = useMemo(() => {
+ const byDate = useMemo(() => {
+    const sorted = [...filtered].sort((a, b) =>
+      getKickoffUtc(a).getTime() - getKickoffUtc(b).getTime()
+    );
+
     const map = new Map<string, Match[]>();
-    for (const match of filtered) {
+    for (const match of sorted) {
       const list = map.get(match.date) ?? [];
       list.push(match);
       map.set(match.date, list);
     }
+
     return Array.from(map.entries());
   }, [filtered]);
 
