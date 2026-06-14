@@ -1,14 +1,17 @@
 // ============================================================
-// MatchDetail.tsx — Vista de detalle del partido (US-13)
-// Datos de la sede (estadio, ciudad, coordenadas), hora local de
-// la sede y hora de Guatemala (UTC-6). Las fichas de países (US-16),
-// las alineaciones y el panel de clima (US-14) se montan después
-// sobre esta misma página.
+// MatchDetail.tsx — Vista de detalle del partido (US-13 a US-16)
+// Datos de la sede (estadio, ciudad, coordenadas), hora local y
+// hora de Guatemala (UTC-6), panel de clima con recomendación
+// contextual, fichas de ambos países con bandera y alineaciones
+// probables. El comparador (US-17) se montará sobre esta página.
 // ============================================================
 
 import type { ReactNode } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import matchesData from '../data/matches.json';
+import CountryCard from '../components/CountryCard';
+import LineupPanel from '../components/LineupPanel';
+import WeatherPanel from '../components/WeatherPanel';
 import { getFlagUrl } from '../utils/flags';
 import {
   getMatchStatus,
@@ -104,6 +107,38 @@ export default function MatchDetail() {
             <p className="text-sm text-slate-400">America/Guatemala</p>
           </InfoCard>
         </section>
+
+        {/* ===== Panel de clima de la sede (US-14 + US-15) ===== */}
+        <section>
+          <h2 className="font-display text-xl font-semibold uppercase tracking-wide text-slate-200">
+            <span className="text-gold-500">/</span> Clima de la sede
+            <span className="ml-2 text-xs font-normal normal-case tracking-normal text-slate-500">
+              Open-Meteo · {match.date}
+            </span>
+          </h2>
+          <div className="mt-4">
+            <WeatherPanel match={match} />
+          </div>
+        </section>
+
+        {/* ===== Fichas de países (US-16) ===== */}
+        <section>
+          <h2 className="font-display text-xl font-semibold uppercase tracking-wide text-slate-200">
+            <span className="text-gold-500">/</span> Países participantes
+          </h2>
+          <div className="mt-4 grid gap-4 md:grid-cols-2">
+            <CountryCard code={match.teamA} teamName={match.teamAName} />
+            <CountryCard code={match.teamB} teamName={match.teamBName} />
+          </div>
+        </section>
+
+        {/* ===== Alineaciones probables ===== */}
+        <LineupPanel
+          teamA={match.teamA}
+          teamAName={match.teamAName}
+          teamB={match.teamB}
+          teamBName={match.teamBName}
+        />
       </div>
     </main>
   );
