@@ -12,7 +12,6 @@ import matchesData from '../data/matches.json';
 import CountryCard from '../components/CountryCard';
 import VenueImage from '../components/VenueImage';
 import CountryCompare from '../components/CountryCompare';
-import LineupPanel from '../components/LineupPanel';
 import WeatherPanel from '../components/WeatherPanel';
 import Flag from '../components/Flag';
 import {
@@ -197,14 +196,6 @@ export default function MatchDetail() {
             <CountryCompare match={match} />
           </div>
         </section>
-
-        {/* ===== Alineaciones probables ===== */}
-        <LineupPanel
-          teamA={match.teamA}
-          teamAName={match.teamAName}
-          teamB={match.teamB}
-          teamBName={match.teamBName}
-        />
       </div>
     </main>
   );
