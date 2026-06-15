@@ -2,13 +2,13 @@
 título: "Dashboard Mundial 2026 — Manual de Usuario"
 descripción: "Guía de uso del sistema de consulta de partidos, clima, sedes y países del Mundial FIFA 2026"
 autores:
-  - "Integrante 1"
-  - "Integrante 2"
-  - "Integrante 3"
+  - "Michaell Rosdman Reyes Martínez"
+  - "Marlon Alfredo Alvarez Quinteros"
+  - "Gabriel Omar Ochoa Hernández"
 curso: "032 — Análisis de Sistemas I"
 docente: "Ing. MA. Carmelo Estuardo Mayén Monterroso"
 fecha: "2026-06-20"
-url_producción: "https://mundial-2026-dashboard.onrender.com"
+url_producción: "https://mundial-2026-y0k5.onrender.com"
 ---
 
 # Dashboard Mundial 2026: Clima, Sedes y Países

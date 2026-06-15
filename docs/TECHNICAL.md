@@ -2,11 +2,11 @@
 título: "Dashboard Mundial 2026 — Manual Técnico"
 versión: "1.0.0"
 autores:
-  - "Integrante 1"
-  - "Integrante 2"
-  - "Integrante 3"
-repositorio: "https://github.com/TU-USUARIO/mundial-2026-dashboard"
-url_producción: "https://mundial-2026-dashboard.onrender.com"
+  - "Michaell Rosdman Reyes Martínez"
+  - "Marlon Alfredo Alvarez Quinteros"
+  - "Gabriel Omar Ochoa Hernández"
+repositorio: "https://github.com/Mike656a/Mundial_2026"
+url_producción: "https://mundial-2026-y0k5.onrender.com"
 stack: "React 18 + TypeScript + Vite + TailwindCSS + TanStack Query"
 fecha: "2026-06-20"
 ---
