@@ -13,11 +13,24 @@ export default {
           600: '#1A3A5C',
         },
         gold: {
+          200: '#F8DA7E',
           300: '#F5C842',
           400: '#E8B62E',
           500: '#D4A017',
           600: '#A87E10',
         },
+      },
+      boxShadow: {
+        glow: '0 0 0 1px rgba(212,160,23,0.25), 0 12px 30px -12px rgba(212,160,23,0.35)',
+      },
+      keyframes: {
+        'fade-up': {
+          '0%': { opacity: '0', transform: 'translateY(8px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+      },
+      animation: {
+        'fade-up': 'fade-up 0.4s ease-out both',
       },
       fontFamily: {
         display: ['"Rajdhani"', 'sans-serif'],

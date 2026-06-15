@@ -2,17 +2,61 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  @apply bg-pitch-950 text-slate-200 font-body antialiased;
+:root {
+  color-scheme: dark;
 }
 
-/* Líneas verticales sutiles estilo FC26 en el fondo */
-.fc-grid-bg {
-  background-image: repeating-linear-gradient(
-    90deg,
-    transparent,
-    transparent 80px,
-    rgba(212, 160, 23, 0.03) 80px,
-    rgba(212, 160, 23, 0.03) 81px
-  );
+html {
+  scroll-behavior: smooth;
 }
+
+body {
+  @apply bg-pitch-950 text-slate-200 font-body antialiased;
+  /* Atmósfera: degradado radial dorado muy sutil sobre el navy profundo */
+  background-image:
+    radial-gradient(1200px 600px at 80% -10%, rgba(212, 160, 23, 0.10), transparent 60%),
+    radial-gradient(900px 500px at 0% 0%, rgba(26, 58, 92, 0.45), transparent 55%);
+  background-attachment: fixed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+
+@layer components {
+  /* Líneas verticales sutiles estilo FC26 sobre el fondo */
+  .fc-grid-bg {
+    background-image: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 80px,
+      rgba(212, 160, 23, 0.03) 80px,
+      rgba(212, 160, 23, 0.03) 81px
+    );
+  }
+
+  /* Tarjeta de cristal: borde fino, fondo translúcido, sombra interior */
+  .glass {
+    @apply rounded-2xl border border-white/5 bg-white/[0.02] backdrop-blur-sm;
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.04),
+      0 18px 40px -24px rgba(0, 0, 0, 0.9);
+  }
+
+  /* Eyebrow / etiqueta de sección en versalitas doradas */
+  .eyebrow {
+    @apply font-display text-[11px] font-semibold uppercase tracking-[0.35em] text-gold-500;
+  }
+
+  /* Línea divisoria con desvanecido dorado */
+  .rule-gold {
+    @apply h-px flex-1 bg-gradient-to-r from-gold-500/50 via-gold-500/15 to-transparent;
+  }
+}
+
+/* Scrollbar discreto y acorde a la paleta */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: #06080F; }
+::-webkit-scrollbar-thumb { background: #13263C; border-radius: 9999px; border: 2px solid #06080F; }
+::-webkit-scrollbar-thumb:hover { background: #1A3A5C; }

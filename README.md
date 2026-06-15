@@ -56,3 +56,27 @@ npm run build
 - **Alineaciones:** no existe API gratuita de alineaciones del Mundial;
   `src/data/squads.json` gestiona XIs probables de forma estática y
   extensible, igual que `matches.json`.
+
+
+## Mejoras de esta versión
+
+- **Filtro por jornada (US-10+):** pestañas Jornada 1 / 2 / 3 / Todas con conteo
+  de partidos. La jornada se deriva en `src/utils/jornada.ts` ordenando los
+  partidos de cada grupo cronológicamente (2 por jornada y grupo → 24/24/24).
+- **Información de las sedes (US-13):** `src/data/venues.ts` enriquece cada
+  `venueName` con el estadio real, aforo, tipo de techo, superficie y año de
+  apertura. Se muestra en las tarjetas y en una sección «El estadio» en el
+  detalle, con enlace a OpenStreetMap.
+- **Filtros avanzados ampliados:** búsqueda libre por equipo o sede, selección,
+  grupo, sede, país anfitrión, fecha y estado (próximo / en curso / finalizado),
+  todos combinables (AND).
+- **Rediseño visual:** se mantiene la paleta navy profundo + dorado (FC26) con
+  más profundidad (fondo radial, tarjetas de cristal, microinteracciones y
+  jerarquía tipográfica revisada). Respeta `prefers-reduced-motion`.
+
+- **Nombres FIFA + imagen del estadio:** las sedes se muestran con el nombre
+  oficial designado por la FIFA (el de `matches.json`, sin patrocinador); el
+  recinto real queda como dato secundario en `commonName`. La sección «El
+  estadio» del detalle incluye una foto obtenida de Wikipedia (API pageimages,
+  sin API key, cacheada 24 h con TanStack Query) mediante `useVenueImage`, con
+  esqueleto de carga y respaldo si no hay imagen.

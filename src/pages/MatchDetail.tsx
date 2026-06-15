@@ -10,6 +10,7 @@ import type { ReactNode } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import matchesData from '../data/matches.json';
 import CountryCard from '../components/CountryCard';
+import VenueImage from '../components/VenueImage';
 import CountryCompare from '../components/CountryCompare';
 import LineupPanel from '../components/LineupPanel';
 import WeatherPanel from '../components/WeatherPanel';
@@ -20,9 +21,12 @@ import {
   formatDateEs,
   STATUS_LABELS,
 } from '../utils/time';
+import { getVenue, formatCapacity, countryLabel } from '../data/venues';
+import { buildJornadaMap } from '../utils/jornada';
 import type { Match } from '../types';
 
 const matches = matchesData as Match[];
+const JORNADA_MAP = buildJornadaMap(matches);
 
 export default function MatchDetail() {
   const { matchId } = useParams();
@@ -44,6 +48,8 @@ export default function MatchDetail() {
 
   const status = getMatchStatus(match);
   const gt = getGuatemalaTime(match);
+  const venue = getVenue(match.venueName);
+  const jornada = JORNADA_MAP.get(match.matchId);
 
   return (
     <main className="fc-grid-bg min-h-screen pb-16">
@@ -59,7 +65,8 @@ export default function MatchDetail() {
 
           <div className="mt-4 flex items-center justify-between">
             <span className="font-display text-sm font-semibold uppercase tracking-[0.3em] text-gold-500">
-              Grupo {match.group} · Partido {match.matchId}
+              {jornada ? `Jornada ${jornada} · ` : ''}Grupo {match.group} · Partido{' '}
+              {match.matchId}
             </span>
             <span className="rounded-full border border-gold-500/50 px-3 py-1 text-xs font-medium uppercase tracking-wide text-gold-300">
               {STATUS_LABELS[status]}
@@ -81,11 +88,13 @@ export default function MatchDetail() {
         {/* ===== Datos de la sede y horarios (US-13) ===== */}
         <section className="grid gap-4 sm:grid-cols-3">
           <InfoCard label="Sede">
-            <p className="font-display text-lg font-semibold uppercase text-slate-100">
+            <p className="font-display text-lg font-semibold uppercase leading-tight text-slate-100">
               {match.venueName}
             </p>
             <p className="text-sm text-slate-400">
-              {match.city} ({match.country})
+              {match.city}
+              {venue ? `, ${venue.region}` : ''} ·{' '}
+              {countryLabel(match.country)}
             </p>
             <p className="mt-1 text-xs text-slate-500">
               {match.latitude.toFixed(4)}, {match.longitude.toFixed(4)}
@@ -108,6 +117,52 @@ export default function MatchDetail() {
             <p className="text-sm text-slate-400">America/Guatemala</p>
           </InfoCard>
         </section>
+
+        {/* ===== Detalle del estadio (sede) ===== */}
+        {venue && (
+          <section>
+            <h2 className="font-display text-xl font-semibold uppercase tracking-wide text-slate-200">
+              <span className="text-gold-500">/</span> El estadio
+            </h2>
+            <div className="mt-4 glass overflow-hidden">
+              <VenueImage
+                wiki={venue.wiki}
+                alt={`Estadio: ${match.venueName} (${venue.commonName})`}
+              />
+              <div className="p-5 sm:p-6">
+                <div className="flex flex-wrap items-end justify-between gap-3">
+                  <div>
+                    <p className="font-display text-2xl font-bold uppercase leading-none text-slate-50">
+                      {match.venueName}
+                    </p>
+                    <p className="mt-1 text-sm text-slate-400">
+                      {venue.city}, {venue.region} · {countryLabel(venue.country)}
+                    </p>
+                    <p className="mt-0.5 text-xs text-slate-500">
+                      Recinto: {venue.commonName}
+                    </p>
+                  </div>
+                  <a
+                    href={`https://www.openstreetmap.org/?mlat=${venue.latitude}&mlon=${venue.longitude}#map=15/${venue.latitude}/${venue.longitude}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="rounded-lg border border-gold-500/30 px-3 py-1.5 text-xs font-medium uppercase
+                               tracking-wide text-gold-300 transition-colors hover:bg-gold-500/10"
+                  >
+                    Ver en el mapa ↗
+                  </a>
+                </div>
+
+                <div className="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-4">
+                  <VenueStat label="Aforo" value={formatCapacity(venue.capacity)} />
+                  <VenueStat label="Techo" value={cap(venue.roof)} />
+                  <VenueStat label="Superficie" value={cap(venue.surface)} />
+                  <VenueStat label="Inaugurado" value={String(venue.opened)} />
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* ===== Panel de clima de la sede (US-14 + US-15) ===== */}
         <section>
@@ -193,11 +248,26 @@ function InfoCard({
   children: ReactNode;
 }) {
   return (
-    <div className="rounded-lg border border-gold-500/30 bg-pitch-800 p-5">
+    <div className="glass p-5">
       <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">
         {label}
       </p>
       <div className="mt-2">{children}</div>
     </div>
   );
+}
+
+function VenueStat({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-xl border border-white/5 bg-pitch-900/50 px-4 py-3">
+      <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-500">
+        {label}
+      </p>
+      <p className="mt-1 font-display text-lg font-bold text-gold-300">{value}</p>
+    </div>
+  );
+}
+
+function cap(s: string): string {
+  return s.charAt(0).toUpperCase() + s.slice(1);
 }
