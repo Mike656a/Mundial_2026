@@ -54,7 +54,7 @@ Cada tarjeta resume un encuentro: el grupo, el estado (Próximo, En curso o
 Finalizado), las dos selecciones con su bandera, la fecha, la hora local de la
 sede, la hora de Guatemala y el estadio. Al hacer clic se abre el detalle.
 
-![Detalle de una tarjeta de partido](./screenshots/match-card.png)
+![Detalle de una tarjeta de partido](./screenshots/kustadi-partidos.png)
 
 ### Vista de detalle del partido
 
@@ -62,7 +62,7 @@ Al seleccionar un partido se muestran: los datos de la sede con coordenadas,
 los tres horarios (local, zona de la sede y Guatemala), el panel de clima, las
 fichas de ambos países, el comparador y las alineaciones probables.
 
-![Vista de detalle del partido](./screenshots/match-detail.png)
+![Vista de detalle del partido](./screenshots/detalle-partido.png)
 
 ### Panel de clima
 
@@ -70,7 +70,7 @@ Muestra la temperatura máxima y mínima del día del partido, la condición
 climática con un ícono, la humedad a la hora del encuentro, el viento, la
 probabilidad de lluvia y una recomendación contextual.
 
-![Panel de clima de la sede](./screenshots/weather-panel.png)
+![Panel de clima de la sede](./screenshots/clima.png)
 
 ## Cómo usar el sistema
 
@@ -82,7 +82,7 @@ probabilidad de lluvia y una recomendación contextual.
    coinciden ("Mostrando X de 72").
 4. Pulsa **Limpiar** para volver a ver todos los partidos.
 
-![Barra de filtros en uso](./screenshots/filters.png)
+![Barra de filtros en uso](./screenshots/filtros.png)
 
 ### Búsqueda por equipo
 
