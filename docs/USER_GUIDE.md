@@ -54,7 +54,7 @@ Cada tarjeta resume un encuentro: el grupo, el estado (Próximo, En curso o
 Finalizado), las dos selecciones con su bandera, la fecha, la hora local de la
 sede, la hora de Guatemala y el estadio. Al hacer clic se abre el detalle.
 
-![Detalle de una tarjeta de partido](./screenshots/kustadi-partidos.png)
+![Detalle de una tarjeta de partido](./screenshots/listado-partidos.png)
 
 ### Vista de detalle del partido
 
