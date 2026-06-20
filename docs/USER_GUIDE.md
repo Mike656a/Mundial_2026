@@ -103,7 +103,7 @@ probabilidad de lluvia y una recomendación contextual.
    horaria de ambas selecciones, más la diferencia de población en valor
    absoluto y porcentaje.
 
-![Comparador de países](./screenshots/compare.png)
+![Comparador de países](./screenshots/comparador.png)
 
 ## Interpretación del clima
 
