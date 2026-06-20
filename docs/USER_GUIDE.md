@@ -36,8 +36,7 @@ selecciones de forma rápida; no se requieren conocimientos técnicos.
   Edge, Firefox o Safari en sus versiones recientes).
 - **Conexión a internet:** necesaria para consultar el clima (Open-Meteo) y los
   datos de países (REST Countries) en tiempo real.
-- **URL pública:** el sistema está disponible en línea, sin instalación, en
-  [https://mundial-2026-dashboard.onrender.com](https://mundial-2026-dashboard.onrender.com).
+- **URL pública:** el sistema está disponible en línea en render: https://mundial-2026-y0k5.onrender.com/
 
 ## Guía de la interfaz
 
